@@ -17,3 +17,122 @@ knitr::opts_chunk$set(
 ```{r setup}
 plot(1:10)
 ```
+
+```{r}
+source("https://raw.githubusercontent.com/linnykos/561_s2025_public/main/HW1_files/generate_data.R")
+
+#generate_data
+```
+
+### Question 2A
+
+This function takes one input n (a positive whole number) and returns a vector with n numbers. The function randomly chooses which distribution(totally three:normal distribution, gamma distribution and chi-squared distribution) to use for each number.
+
+### Question 2B
+
+```{r, echo=FALSE}
+set.seed(1)
+mean(generate_data(n=10))
+set.seed(1)
+
+n_vals <- c(1, 2, 3, 5, 10, 100)
+means_list <- vector("list", length(n_vals))
+
+for (i in seq_along(n_vals)) {
+  n <- n_vals[i]
+  means_list[[i]] <- replicate(10000, mean(generate_data(n)))
+}
+
+par(mfrow = c(2, 3), mar = c(4, 4, 2, 1), oma = c(3, 0, 0, 0)) 
+
+for (i in seq_along(n_vals)) {
+  hist(means_list[[i]],
+       breaks = 100,
+       main = paste("n =", n_vals[i]),
+       xlab = "Empirical Mean",
+       ylab = "Frequency")
+}
+
+mtext("Figure 1: Distribution of empirical means for different n", 
+      side = 1, outer = TRUE, line = 1.5, cex = 1.2)
+
+```
+
+### Question 2C
+
+As the sample size n increases, the histograms of the empirical means become more bell-shaped and concentrated around the true mean. This supports the Central Limit Theorem, which states that the distribution of sample means approaches a normal distribution as n increases, regardless of the original data distribution.
+
+### Question 3A
+
+```{r,echo=FALSE}
+df <- read.csv("https://raw.githubusercontent.com/linnykos/561_s2025_public/main/HW1_files/sea-ad.csv")
+
+head(df)
+summary(df)
+
+```
+
+The head(df) function shows the first six rows of the dataset, which includes information about each donor such as their age at death, sex, APOE4 status, cognitive status, last CASI score, and Braak stage.
+
+### Question 3B
+
+```{r,echo=FALSE}
+dim(df)    
+class(df) 
+
+```
+
+The dataset has 84 rows and 7 columns. The class of df is "data.frame"
+
+### Question 3C
+
+```{r,echo=FALSE}
+# Step 1: Replace "90+" with "90"
+df$Age.at.Death[df$Age.at.Death == "90+"] <- "90"
+
+# Step 2: Convert Age.at.Death to numeric
+df$Age.at.Death <- as.numeric(df$Age.at.Death)
+
+# Step 3: Plot histogram
+hist(df$Age.at.Death,
+     main = "Histogram of Age at Death",
+     xlab = "Age at Death",
+     ylab = "Frequency",
+     col = "lightblue",
+     border = "white")
+
+
+```
+
+### Question 3D
+
+```{r,echo=FALSE}
+df$Sex <- as.factor(df$Sex)
+df$APOE4.Status <- as.factor(df$APOE4.Status)
+df$Cognitive.Status <- as.factor(df$Cognitive.Status)
+df$Braak <- as.factor(df$Braak)
+
+```
+
+### Question 3E
+
+```{r,echo=FALSE}
+summary(df)
+```
+
+### Question 3F
+
+```{r,echo=FALSE}
+table(df$Braak, df$Cognitive.Status)
+
+```
+
+### Question 3G
+
+```{r,echo=FALSE}
+quantiles <- quantile(df$Last.CASI.Score, probs = seq(0, 1, 0.25), na.rm = TRUE)
+
+CASI.quantile.group <- cut(df$Last.CASI.Score, breaks = quantiles, include.lowest = TRUE)
+table(CASI.quantile.group, df$Cognitive.Status)
+
+```
