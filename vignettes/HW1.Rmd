@@ -18,6 +18,24 @@ knitr::opts_chunk$set(
 plot(1:10)
 ```
 
+
+
+### Question 0A
+
+Anke Li(He/him)
+
+### Question 0B
+
+I have read and understood the entire syllabus,
+
+### Question 0C
+
+Biost 515 
+
+### Question 0D
+
+Full pipeline of using github with Rstudio.
+
 ```{r}
 source("https://raw.githubusercontent.com/linnykos/561_s2025_public/main/HW1_files/generate_data.R")
 
@@ -30,7 +48,7 @@ This function takes one input n (a positive whole number) and returns a vector w
 
 ### Question 2B
 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 set.seed(1)
 mean(generate_data(n=10))
 set.seed(1)
@@ -64,7 +82,7 @@ As the sample size n increases, the histograms of the empirical means become mor
 
 ### Question 3A
 
-```{r,echo=FALSE}
+```{r,echo=TRUE}
 df <- read.csv("https://raw.githubusercontent.com/linnykos/561_s2025_public/main/HW1_files/sea-ad.csv")
 
 head(df)
@@ -76,7 +94,7 @@ The head(df) function shows the first six rows of the dataset, which includes in
 
 ### Question 3B
 
-```{r,echo=FALSE}
+```{r,echo=TRUE}
 dim(df)    
 class(df) 
 
@@ -86,14 +104,11 @@ The dataset has 84 rows and 7 columns. The class of df is "data.frame"
 
 ### Question 3C
 
-```{r,echo=FALSE}
-# Step 1: Replace "90+" with "90"
-df$Age.at.Death[df$Age.at.Death == "90+"] <- "90"
+```{r,echo=TRUE}
 
-# Step 2: Convert Age.at.Death to numeric
+df$Age.at.Death[df$Age.at.Death == "90+"] <- "90"
 df$Age.at.Death <- as.numeric(df$Age.at.Death)
 
-# Step 3: Plot histogram
 hist(df$Age.at.Death,
      main = "Histogram of Age at Death",
      xlab = "Age at Death",
@@ -106,7 +121,7 @@ hist(df$Age.at.Death,
 
 ### Question 3D
 
-```{r,echo=FALSE}
+```{r,echo=TRUE}
 df$Sex <- as.factor(df$Sex)
 df$APOE4.Status <- as.factor(df$APOE4.Status)
 df$Cognitive.Status <- as.factor(df$Cognitive.Status)
@@ -116,20 +131,20 @@ df$Braak <- as.factor(df$Braak)
 
 ### Question 3E
 
-```{r,echo=FALSE}
+```{r,echo=TRUE}
 summary(df)
 ```
 
 ### Question 3F
 
-```{r,echo=FALSE}
+```{r,echo=TRUE}
 table(df$Braak, df$Cognitive.Status)
 
 ```
 
 ### Question 3G
 
-```{r,echo=FALSE}
+```{r,echo=TRUE}
 quantiles <- quantile(df$Last.CASI.Score, probs = seq(0, 1, 0.25), na.rm = TRUE)
 
 CASI.quantile.group <- cut(df$Last.CASI.Score, breaks = quantiles, include.lowest = TRUE)
