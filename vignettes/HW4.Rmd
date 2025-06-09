@@ -45,7 +45,7 @@ vignette: >
 
 Below, I run my five unit tests for both `compute_maximal_partial_clique12()` and `compute_maximal_partial_clique13()`.
 
-```{r test12, error=TRUE}
+```{r test12, error=TRUE,echo=TRUE}
 library(testthat)
 # Test 1
 test_that("output list contains clique_idx and edge_density", {
@@ -89,7 +89,7 @@ test_that("function errors if alpha is out of bounds", {
 
 #### Q2A:
 
-```{r test13, error=TRUE}
+```{r test13, error=TRUE,echo=TRUE}
 library(testthat)
 # Test 1
 test_that("output list contains clique_idx and edge_density", {
@@ -130,7 +130,7 @@ test_that("function errors if alpha is out of bounds", {
 })
 ```
 
-```{r}
+```{r, echo=TRUE}
 library(UWBiost561)
 set.seed(10)
 data <- UWBiost561::generate_partial_clique(n = 10, 
@@ -155,7 +155,7 @@ result2
 
 ```
 
-```{r}
+```{r, echo=TRUE}
 set.seed(123)
 data <- UWBiost561::generate_partial_clique(n = 48, clique_fraction = 0.7, clique_edge_density = 0.85)
 result <- UWBiost561::compute_maximal_partial_clique_master(
@@ -204,14 +204,26 @@ The goal of my simulation study is to compare the performance of all 15 `compute
 
 #### Q2C:
 
-
 #### Q2D:
 
+#### Q2E:
+```{r, echo=TRUE}
 
-```{r}
-
-knitr::include_graphics("figs/check_top.png")
-knitr::include_graphics("figs/check_bottom.png")
-devtools::session_info()
+knitr::include_graphics("figs/HW4Q2top.png")
+knitr::include_graphics("figs/HW4Q2bottom.png")
+#devtools::session_info()
 
 ```
+
+
+#### Q3:
+
+```{r fig.hw4, echo=FALSE, out.width="80%"}
+knitr::include_graphics("HW4_simulation.png")
+
+```
+
+
+#### Q4:
+
+For my final project, I plan to build a PkgDown website for my UWBiost561 R package, which includes functions for generating random graphs with planted partial cliques, computing maximal partial cliques, and running simulation studies.
