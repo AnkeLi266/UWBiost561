@@ -201,12 +201,12 @@ The goal of my simulation study is to compare the performance of all 15 `compute
 -   **Estimated Total Time:**\
     With 3 values of `n`, 2 values of `alpha`, 5 trials per level, and 15 methods, there will be 3 × 2 × 5 × 15 = 450 runs. With a max time limit of 30 seconds per run, the worst-case total is 3.75 hours. In practice, most runs should finish much faster.
 
-
 #### Q2C:
 
 #### Q2D:
 
 #### Q2E:
+
 ```{r, echo=TRUE}
 
 knitr::include_graphics("figs/HW4Q2top.png")
@@ -215,14 +215,12 @@ knitr::include_graphics("figs/HW4Q2bottom.png")
 
 ```
 
-
 #### Q3:
 
 ```{r fig.hw4, echo=FALSE, out.width="80%"}
 knitr::include_graphics("HW4_simulation.png")
 
 ```
-
 
 #### Q4:
 
