@@ -9,7 +9,7 @@ generate_partial_clique(n, clique_fraction, clique_edge_density)
 \arguments{
 \item{n}{Positive integer. Number of nodes in the graph.}
 
-\item{clique_fraction}{Numeric 0, 1. Fraction of nodes in the partial clique.}
+\item{clique_fraction}{Numeric in \link{0, 1}. Fraction of nodes in the partial clique.}
 
 \item{clique_edge_density}{A number between 0 and 1 (inclusive).}
 }
