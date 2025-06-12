@@ -1,0 +1,6 @@
+pandoc: '3.2'
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  UWBiost561_final: UWBiost561_final.html
+last_built: 2025-06-12T19:43Z

@@ -7,6 +7,17 @@
 #' @param n_trials Number of trials per setting (default 5)
 #' @param time_limit Max seconds per method (default 30)
 #' @return Data frame with simulation results
+#' 
+#'  @examples
+#' Run a quick simulation study (small for demo)
+#' sim_results <- simulate_partial_clique_study(
+#'   n_values = c(10),
+#'   alpha_values = c(0.7),
+#'   n_trials = 1,
+#'   time_limit = 3
+#' )
+#' head(sim_results)
+#' 
 #' @export
 simulate_partial_clique_study <- function(
     n_values = c(10, 25, 50),

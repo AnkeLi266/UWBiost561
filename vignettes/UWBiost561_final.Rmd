@@ -1,0 +1,79 @@
+---
+title: "Getting Started with Partial Clique Simulation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with Partial Clique Simulation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Partial Clique Simulation and Analysis
+
+Welcome! This vignette demonstrates how to use the core functions of the `UWBiost561` package for generating, analyzing, and benchmarking graphs with planted partial cliques.
+
+---
+
+## 1. Generating a Partial Clique Graph
+
+Let's start by generating a random adjacency matrix with a planted partial clique using `generate_partial_clique()`:
+
+```{r, message=FALSE}
+library(UWBiost561)
+
+set.seed(123)
+sim <- generate_partial_clique(
+  n = 10,
+  clique_fraction = 0.5,
+  clique_edge_density = 0.8
+)
+adj_mat <- sim$adj_mat
+
+# Print adjacency matrix
+adj_mat
+
+```
+We have now generated a 10x10 adjacency matrix. Each entry indicates whether an edge exists between two nodes. The partial clique is "planted" according to the specified parameters.
+
+2. Finding a Maximal Partial Clique
+Next, we use compute_maximal_partial_clique7() to find a maximal partial clique with a desired edge density threshold (alpha). Here, we use alpha = 0.7:
+
+```{r}
+
+result <- compute_maximal_partial_clique7(
+  adj_mat = adj_mat,
+  alpha = 0.7
+)
+
+cat("Nodes in maximal partial clique:", result$clique_idx, "\n")
+cat("Edge density in clique:", result$edge_density, "\n")
+
+```
+
+
+3. Running a Simulation Study
+Finally, let's run a small simulation study to compare performance across different settings.
+We simulate graphs of size 10 and 20, test two different density thresholds (alpha), and repeat each setting twice:
+```{r}
+sim_results <- simulate_partial_clique_study(
+  n_values = c(10, 20),
+  alpha_values = c(0.7, 0.9),
+  n_trials = 2,
+  time_limit = 3
+)
+
+head(sim_results)
+
+```
+You can further summarize or visualize the results with your favorite tools (e.g., dplyr, ggplot2).
+For example, let's summarize average clique size by n and alpha:
+```{r}
+
+library(dplyr)
+summary_stats <- sim_results %>%
+  group_by(n, alpha) %>%
+  summarize(
+    avg_clique_size = mean(clique_size, na.rm = TRUE),
+    error_rate = mean(error, na.rm = TRUE)
+  )
+
+summary_stats

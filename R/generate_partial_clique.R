@@ -3,9 +3,19 @@
 #' This function generates a symmetric adjacency matrix with a partial clique.
 #'
 #' @param n Positive integer. Number of nodes in the graph.
-#' @param clique_fraction Numeric in [0, 1]. Fraction of nodes in the partial clique.
-#' @param clique_edge_density A number between 0 and 1 (inclusive).
+#' @param clique_fraction Numeric between 0 and 1. Fraction of nodes in the partial clique.
+#' @param clique_edge_density Numeric between 0 and 1 (inclusive).
 #' @return A list with element \code{adj_mat}, the symmetric adjacency matrix.
+#' 
+#' @examples
+#' # Generate a 10-node graph with a 5-node partial clique (edge density 0.8)
+#' sim <- generate_partial_clique(n = 10, clique_fraction = 0.5, clique_edge_density = 0.8)
+#' adj_mat <- sim$adj_mat
+#' print(adj_mat)
+#'
+#' # Check the size of the adjacency matrix
+#' dim(adj_mat)
+#'
 #' @export
 generate_partial_clique <- function(n, clique_fraction, clique_edge_density) {
   # Defensive input checks

@@ -1,12 +1,24 @@
-#' Find the maximal partial clique in an adjacency matrix
+#' Find a maximal partial clique in a binary adjacency matrix
 #'
-#' @param adj_mat a symmetric matrix with 5 to 50 rows
-#' @param alpha a numeric value between 0.5 and 1
+#' Given a symmetric adjacency matrix with binary entries, finds a subset of nodes that forms a partial clique with edge density at least alpha.
 #'
-#' @return a list containing clique_idx and edge density
+#' @param adj_mat A symmetric binary matrix (0/1) with 5 to 50 rows, diagonal entries are 1, and no row/col names.
+#' @param alpha A numeric between 0.5 and 1 specifying minimum edge density.
+#'
+#' @return A list with two elements: 
+#' \describe{
+#'   \item{clique_idx}{Indices of nodes in the maximal partial clique.}
+#'   \item{edge_density}{Edge density among selected nodes.}
+#' }
+#' @examples
+#' mat <- diag(1, 5)
+#' compute_maximal_partial_clique7(mat, 0.8)
+#' 
+#' mat2 <- matrix(1, 5, 5)
+#' diag(mat2) <- 1
+#' compute_maximal_partial_clique7(mat2, 0.8)
 #' @export
 compute_maximal_partial_clique7 <- function(adj_mat, alpha){
-  # check input
   stopifnot(
     is.matrix(adj_mat),
     all(adj_mat %in% c(0, 1)),
@@ -22,31 +34,28 @@ compute_maximal_partial_clique7 <- function(adj_mat, alpha){
     alpha <= 1
   )
   
-  # start the function
   if (all(adj_mat == diag(nrow(adj_mat)))) {
     return(list(
-      clique_idx = 1,  # Or any single node (e.g., sample(1:nrow(adj_mat), 1))
-      edge_density = 1  # A single node has edge density 1 by definition
+      clique_idx = 1,
+      edge_density = 1
     ))
-  }
-  else{
-    ones <- apply(adj_mat, 1, max_consec_ones_7)
-    max_idx <- which.max(ones)
-    clique_idx <- max_idx:(max_idx+max(ones)-1)
-    # calculate edge density
-    sum_of_ones <- sum(ones[max_idx:(max_idx+max(ones)-1)])
-    edge_density <- (sum_of_ones-max(ones))/(max(ones)*(max(ones)-1))
-    return(list(clique_idx = clique_idx, edge_density = edge_density))
-  }
-}
-
-# helper function
-# Function to calculate max consecutive 1s in a vector
-max_consec_ones_7 <- function(x) {
-  runs <- rle(x)
-  if (any(runs$values == 1)) {
-    return(max(runs$lengths[runs$values == 1]))
   } else {
-    return(0)
+    ones <- apply(adj_mat, 1, function(x) {
+      runs <- rle(x)
+      if (any(runs$values == 1)) {
+        return(max(runs$lengths[runs$values == 1]))
+      } else {
+        return(0)
+      }
+    })
+    max_idx <- which.max(ones)
+    clique_idx <- max_idx:(max_idx + max(ones) - 1)
+    sum_of_ones <- sum(ones[max_idx:(max_idx + max(ones) - 1)])
+    edge_density <- if (max(ones) > 1) {
+      (sum_of_ones - max(ones)) / (max(ones) * (max(ones) - 1))
+    } else {
+      1
+    }
+    return(list(clique_idx = clique_idx, edge_density = edge_density))
   }
 }
